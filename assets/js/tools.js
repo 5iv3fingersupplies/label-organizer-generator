@@ -165,4 +165,17 @@
     const kind = form.dataset.calculator;
     result.innerHTML = handlers[kind] ? handlers[kind](form) : "<p>Tool configuration missing.</p>";
   });
-})();
+  document.addEventListener("click", function (event) {
+    const link = event.target.closest("a[data-affiliate]");
+    if (!link) return;
+    try {
+      const key = "fff_affiliate_click_counts";
+      const store = JSON.parse(localStorage.getItem(key) || "{}");
+      const id = link.dataset.affiliate || "unknown";
+      store[id] = (store[id] || 0) + 1;
+      store.lastClickAt = new Date().toISOString();
+      localStorage.setItem(key, JSON.stringify(store));
+    } catch (_) {
+      /* Local-only click counting should never block navigation. */
+    }
+  });})();

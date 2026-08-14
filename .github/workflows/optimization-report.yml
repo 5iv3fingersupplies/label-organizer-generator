@@ -15,7 +15,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: python scripts/build.py --out site
-      - run: python scripts/validate.py --dist site
-      - run: python scripts/optimize.py --out reports
-      - run: cat reports/optimization-report.md >> "$GITHUB_STEP_SUMMARY"
+      - id: preflight
+        run: python scripts/preflight.py
+      - if: steps.preflight.outputs.halted != 'true'
+        run: python scripts/build.py --out site
+      - if: steps.preflight.outputs.halted != 'true'
+        run: python scripts/validate.py --dist site
+      - if: steps.preflight.outputs.halted != 'true'
+        run: python scripts/optimize.py --out reports
+      - if: steps.preflight.outputs.halted != 'true'
+        run: cat reports/optimization-report.md >> "$GITHUB_STEP_SUMMARY"

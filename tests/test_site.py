@@ -17,6 +17,16 @@ class SiteTest(unittest.TestCase):
         self.assertIn("tag=fivefingersup-20", html)
         self.assertIn('rel="sponsored nofollow noopener"', html)
         self.assertIn("As an Amazon Associate I earn from qualifying purchases.", html)
+    def test_operations_controls(self):
+        ops=json.loads((ROOT/"data/operations.json").read_text(encoding="utf-8"))
+        self.assertFalse(ops["kill_switch"])
+        self.assertEqual(ops["max_incremental_cost_usd"],0)
+        self.assertEqual(ops["bad_item_policy"]["retry_limit"],1)
+        js=(ROOT/"assets/js/tools.js").read_text(encoding="utf-8")
+        self.assertIn("localStorage", js)
+        self.assertIn("fff_affiliate_click_counts", js)
+        workflows="\n".join(p.read_text(encoding="utf-8") for p in (ROOT/".github/workflows").glob("*.yml"))
+        self.assertIn("scripts/preflight.py", workflows)
     def test_optimizer(self):
         subprocess.run([sys.executable,"scripts/optimize.py","--out","reports"],cwd=ROOT,check=True)
         report=json.loads((ROOT/"reports/optimization-report.json").read_text(encoding="utf-8"))

@@ -38,8 +38,11 @@ def target_exists(dist, current, href):
     return target.exists()
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument("--dist", default="site"); args=ap.parse_args()
-    errors=[]; tools=load("tools.json"); guides=load("guides.json"); monetization=load("monetization.json"); recs={r["id"] for r in load("recommendations.json")}
+    errors=[]; tools=load("tools.json"); guides=load("guides.json"); monetization=load("monetization.json"); operations=load("operations.json"); recs={r["id"] for r in load("recommendations.json")}
     if monetization.get("cost_cap_usd") != 0: fail(errors, "cost cap is not 0")
+    if operations.get("max_incremental_cost_usd") != 0: fail(errors, "operations cost cap is not 0")
+    if operations.get("routine_human_approval_required"): fail(errors, "routine human approval is enabled")
+    if operations.get("bad_item_policy", {}).get("retry_limit") != 1: fail(errors, "bad item retry limit is not 1")
     if not monetization.get("amazon_associates_tag"): fail(errors, "missing associates tag")
     slugs=set()
     for name, coll in [("tool", tools), ("guide", guides)]:
@@ -66,7 +69,7 @@ def main():
     for req in ["sitemap.xml","robots.txt","assets/css/site.css","assets/js/tools.js"]:
         if not (dist/req).exists(): fail(errors, f"missing {req}")
     workflow_text="\n".join(p.read_text(encoding="utf-8") for p in (ROOT/".github/workflows").glob("*.yml"))
-    for needle in ["cron:", "deploy-pages", "scripts/optimize.py", "scripts/validate.py"]:
+    for needle in ["cron:", "deploy-pages", "scripts/preflight.py", "scripts/optimize.py", "scripts/validate.py"]:
         if needle not in workflow_text: fail(errors, f"workflow missing {needle}")
     for path in ROOT.rglob("*"):
         if not path.is_file(): continue

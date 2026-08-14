@@ -1,0 +1,17 @@
+{
+  "kill_switch": false,
+  "max_incremental_cost_usd": 0,
+  "routine_human_approval_required": false,
+  "bad_item_policy": {
+    "retry_limit": 1,
+    "on_second_failure": "skip_or_discard"
+  },
+  "privacy_preserving_click_tracking": "browser_local_storage_only",
+  "forbidden_runtime_dependencies": [
+    "paid APIs",
+    "paid hosting",
+    "paid analytics",
+    "subscriptions",
+    "advertising spend"
+  ]
+}
