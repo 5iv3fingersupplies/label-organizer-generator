@@ -1,0 +1,18 @@
+{
+  "amazon_associates_tag": "fivefingersup-20",
+  "amazon_search_links_enabled": true,
+  "checkout_links_enabled": false,
+  "checkout_provider_options": [
+    "Payhip Free",
+    "Gumroad"
+  ],
+  "cost_cap_usd": 0,
+  "disclosure": "<strong>As an Amazon Associate I earn from qualifying purchases.</strong> Label Organizer Generator may earn from qualifying purchases made through product links. Digital-product checkout links are placeholders until a no-monthly-fee storefront is connected.",
+  "forbidden_content": [
+    "amazon_reviews",
+    "amazon_ratings",
+    "amazon_prices",
+    "amazon_availability",
+    "amazon_images"
+  ]
+}

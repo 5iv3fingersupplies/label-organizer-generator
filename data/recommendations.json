@@ -1,0 +1,86 @@
+[
+  {
+    "id": "waterproof-label-paper",
+    "label": "Waterproof label paper",
+    "query": "Waterproof label paper",
+    "fit": "Useful support item for pantry label maker."
+  },
+  {
+    "id": "clear-pantry-bins",
+    "label": "Clear pantry bins",
+    "query": "Clear pantry bins",
+    "fit": "Useful support item for pantry label maker."
+  },
+  {
+    "id": "permanent-markers",
+    "label": "Permanent markers",
+    "query": "Permanent markers",
+    "fit": "Useful support item for pantry label maker."
+  },
+  {
+    "id": "moving-labels",
+    "label": "Moving labels",
+    "query": "Moving labels",
+    "fit": "Useful support item for moving box label generator."
+  },
+  {
+    "id": "packing-tape",
+    "label": "Packing tape",
+    "query": "Packing tape",
+    "fit": "Useful support item for moving box label generator."
+  },
+  {
+    "id": "box-cutter",
+    "label": "Box cutter",
+    "query": "Box cutter",
+    "fit": "Useful support item for moving box label generator."
+  },
+  {
+    "id": "latching-storage-bins",
+    "label": "Latching storage bins",
+    "query": "Latching storage bins",
+    "fit": "Useful support item for garage bin inventory planner."
+  },
+  {
+    "id": "waterproof-labels",
+    "label": "Waterproof labels",
+    "query": "Waterproof labels",
+    "fit": "Useful support item for label pack comparison."
+  },
+  {
+    "id": "shelf-marker-clips",
+    "label": "Shelf marker clips",
+    "query": "Shelf marker clips",
+    "fit": "Useful support item for garage bin inventory planner."
+  },
+  {
+    "id": "qr-label-sheets",
+    "label": "QR label sheets",
+    "query": "QR label sheets",
+    "fit": "Useful support item for qr inventory text builder."
+  },
+  {
+    "id": "label-printer",
+    "label": "Label printer",
+    "query": "Label printer",
+    "fit": "Useful support item for qr inventory text builder."
+  },
+  {
+    "id": "inventory-notebook",
+    "label": "Inventory notebook",
+    "query": "Inventory notebook",
+    "fit": "Useful support item for qr inventory text builder."
+  },
+  {
+    "id": "removable-labels",
+    "label": "Removable labels",
+    "query": "Removable labels",
+    "fit": "Useful support item for label pack comparison."
+  },
+  {
+    "id": "laminating-pouches",
+    "label": "Laminating pouches",
+    "query": "Laminating pouches",
+    "fit": "Useful support item for label pack comparison."
+  }
+]

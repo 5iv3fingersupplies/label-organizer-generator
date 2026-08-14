@@ -1,0 +1,144 @@
+[
+  {
+    "slug": "pantry-label-maker",
+    "title": "Pantry Label Maker",
+    "category": "Labels",
+    "kind": "label_sheet",
+    "description": "Generate clean pantry labels by item list and label size.",
+    "fields": [
+      {
+        "id": "title",
+        "label": "Sheet title",
+        "type": "text",
+        "value": "Practice Sheet"
+      },
+      {
+        "id": "items",
+        "label": "Items, words, labels, or prompts",
+        "type": "textarea",
+        "value": "Alpha, Bravo, Charlie, Delta"
+      }
+    ],
+    "recommendation_ids": [
+      "waterproof-label-paper",
+      "clear-pantry-bins",
+      "permanent-markers"
+    ]
+  },
+  {
+    "slug": "moving-box-labels",
+    "title": "Moving Box Label Generator",
+    "category": "Moving",
+    "kind": "label_sheet",
+    "description": "Create room, priority, and contents labels for moving boxes.",
+    "fields": [
+      {
+        "id": "title",
+        "label": "Sheet title",
+        "type": "text",
+        "value": "Practice Sheet"
+      },
+      {
+        "id": "items",
+        "label": "Items, words, labels, or prompts",
+        "type": "textarea",
+        "value": "Alpha, Bravo, Charlie, Delta"
+      }
+    ],
+    "recommendation_ids": [
+      "moving-labels",
+      "packing-tape",
+      "box-cutter"
+    ]
+  },
+  {
+    "slug": "garage-bin-inventory",
+    "title": "Garage Bin Inventory Planner",
+    "category": "Inventory",
+    "kind": "inventory",
+    "description": "Plan bin count, categories, and label IDs for garage storage.",
+    "fields": [
+      {
+        "id": "bins",
+        "label": "Number of bins",
+        "type": "number",
+        "value": 12
+      },
+      {
+        "id": "categories",
+        "label": "Categories",
+        "type": "textarea",
+        "value": "Tools, Seasonal, Cables, Paper"
+      }
+    ],
+    "recommendation_ids": [
+      "latching-storage-bins",
+      "waterproof-labels",
+      "shelf-marker-clips"
+    ]
+  },
+  {
+    "slug": "qr-inventory-text-builder",
+    "title": "QR Inventory Text Builder",
+    "category": "Inventory",
+    "kind": "label_sheet",
+    "description": "Format short inventory text blocks ready for a QR or label workflow.",
+    "fields": [
+      {
+        "id": "title",
+        "label": "Sheet title",
+        "type": "text",
+        "value": "Practice Sheet"
+      },
+      {
+        "id": "items",
+        "label": "Items, words, labels, or prompts",
+        "type": "textarea",
+        "value": "Alpha, Bravo, Charlie, Delta"
+      }
+    ],
+    "recommendation_ids": [
+      "qr-label-sheets",
+      "label-printer",
+      "inventory-notebook"
+    ]
+  },
+  {
+    "slug": "label-pack-comparison",
+    "title": "Label Pack Comparison",
+    "category": "Labels",
+    "kind": "comparison",
+    "description": "Score label materials by moisture, adhesive, readability, and removability.",
+    "fields": [
+      {
+        "id": "fit",
+        "label": "Fit score 1-10",
+        "type": "number",
+        "value": 7
+      },
+      {
+        "id": "ease",
+        "label": "Ease score 1-10",
+        "type": "number",
+        "value": 6
+      },
+      {
+        "id": "marginScore",
+        "label": "Margin/capacity score 1-10",
+        "type": "number",
+        "value": 7
+      },
+      {
+        "id": "repeat",
+        "label": "Repeatability score 1-10",
+        "type": "number",
+        "value": 6
+      }
+    ],
+    "recommendation_ids": [
+      "waterproof-labels",
+      "removable-labels",
+      "laminating-pouches"
+    ]
+  }
+]
