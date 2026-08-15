@@ -1,4 +1,4 @@
-# Label Organizer Generator
+# Home Organizer Label Tools
 
 Printable labels, box IDs, and home inventory pages from browser-only tools.
 

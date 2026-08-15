@@ -1,9 +1,9 @@
 {
-    "name":  "Label Organizer Generator",
-    "brand":  "Label Organizer Generator",
-    "repo":  "label-organizer-generator",
-    "owner":  "5iv3fingersupplies-co",
-    "base_url":  "https://5iv3fingersupplies.github.io/label-organizer-generator",
-    "tagline":  "Printable labels, box IDs, and home inventory pages from browser-only tools.",
-    "model":  "Free label generators plus affiliate supply links and future SVG/PDF packs."
+  "name": "Home Organizer Label Tools",
+  "brand": "Home Organizer Label Tools",
+  "repo": "label-organizer-generator",
+  "owner": "5iv3fingersupplies-co",
+  "base_url": "https://5iv3fingersupplies.github.io/label-organizer-generator",
+  "tagline": "Printable labels, box IDs, and inventory tools for home organizers buying storage supplies.",
+  "model": "Free label generators plus affiliate storage-supply links and future SVG/PDF packs."
 }
