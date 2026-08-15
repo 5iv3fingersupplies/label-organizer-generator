@@ -14,7 +14,7 @@ class SiteTest(unittest.TestCase):
         self.assertGreaterEqual(len(json.loads((ROOT/"data/guides.json").read_text(encoding="utf-8"))),10)
         self.assertGreaterEqual(len(list((ROOT/"site").rglob("*.html"))),accelerator["target_min_pages"])
     def test_accelerator_pages(self):
-        for path in ["recommendations/index.html","tool-plans/index.html","checklists/index.html","categories/index.html","assets/img/social-card.svg"]:
+        for path in ["recommendations/index.html","tool-plans/index.html","checklists/index.html","categories/index.html","assets/img/hero-v2.png"]:
             self.assertTrue((ROOT/"site"/path).exists(), path)
     def test_monetized_links(self):
         html="\n".join(p.read_text(encoding="utf-8") for p in (ROOT/"site").rglob("*.html"))

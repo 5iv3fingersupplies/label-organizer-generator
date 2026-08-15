@@ -31,3 +31,9 @@ python -m unittest discover -s tests
 - Added printable checklist pages for guide-based workflows.
 - Added topic hubs, social preview asset, local-only affiliate click counter, and stricter validation.
 - Live URL: https://5iv3fingersupplies.github.io/label-organizer-generator/
+
+## Visual advertising upgrade
+
+- Upgraded the portfolio UI with stronger visual hierarchy, contrast, decision cues, and clearer calls to action.
+- Added site-specific hero art and metadata for richer sharing previews.
+- Uses truthful advertising psychology: clarity, friction reduction, loss-aversion checklists, and calculator-first confidence cues.

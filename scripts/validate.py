@@ -70,7 +70,7 @@ def main():
     html=list(dist.rglob("*.html"))
     target_min=int(accelerator.get("target_min_pages", 50))
     if len(html) < target_min: fail(errors, f"fewer than target minimum html pages: {len(html)} < {target_min}")
-    required=["sitemap.xml","robots.txt","assets/css/site.css","assets/js/tools.js","assets/img/social-card.svg","recommendations/index.html","tool-plans/index.html","checklists/index.html","categories/index.html"]
+    required=["sitemap.xml","robots.txt","assets/css/site.css","assets/js/tools.js","assets/img/hero-v2.png","recommendations/index.html","tool-plans/index.html","checklists/index.html","categories/index.html"]
     for req in required:
         if not (dist/req).exists(): fail(errors, f"missing {req}")
     for rec in recommendations:
@@ -80,6 +80,7 @@ def main():
         if DISCLOSURE not in text: fail(errors, f"missing affiliate disclosure in {file.relative_to(dist)}")
         if '<link rel="canonical"' not in text: fail(errors, f"missing canonical in {file.relative_to(dist)}")
         if 'application/ld+json' not in text: fail(errors, f"missing structured data in {file.relative_to(dist)}")
+        if 'theme-color' not in text: fail(errors, f"missing theme color in {file.relative_to(dist)}")
         scan(errors, str(file.relative_to(dist)), text)
         parser=Parser(); parser.feed(text)
         for href in parser.hrefs:
