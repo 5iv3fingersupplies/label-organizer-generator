@@ -126,6 +126,8 @@ img{max-width:100%;height:auto}
 .content p{max-width:74ch}
 .content li{margin:7px 0}
 .notice,.feed-callout{background:#fff;border:1px solid var(--line);border-left:5px solid var(--warm);padding:15px 17px;margin:18px 0;border-radius:8px;box-shadow:var(--soft-shadow)}
+.affiliate-note{max-width:74ch;background:#fff;border:1px solid var(--line);border-left:4px solid var(--warm);border-radius:8px;padding:11px 13px;color:var(--muted);font-size:.92rem;box-shadow:var(--soft-shadow)}
+.affiliate-note strong{color:var(--ink)}
 .tool-shell{display:grid;grid-template-columns:minmax(280px,.78fr) minmax(0,1.22fr);gap:20px;align-items:start}
 .tool-panel,.result-box,.checklist{background:#fff;border:1px solid var(--line);border-radius:8px;padding:20px;box-shadow:var(--soft-shadow)}
 .result-box{min-height:260px;background:linear-gradient(180deg,#fff,var(--surface))}

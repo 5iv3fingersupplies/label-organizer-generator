@@ -88,7 +88,8 @@ def main():
         if not (dist/"recommendations"/rec["id"]/"index.html").exists(): fail(errors, f"missing product-fit page {rec['id']}")
     for file in html:
         text=file.read_text(encoding="utf-8")
-        if DISCLOSURE not in text: fail(errors, f"missing affiliate disclosure in {file.relative_to(dist)}")
+        has_affiliate_link = "tag=fivefingersup-20" in text or 'rel="sponsored nofollow noopener"' in text
+        if has_affiliate_link and DISCLOSURE not in text: fail(errors, f"missing affiliate disclosure near monetized links in {file.relative_to(dist)}")
         if '<link rel="canonical"' not in text: fail(errors, f"missing canonical in {file.relative_to(dist)}")
         if 'application/ld+json' not in text: fail(errors, f"missing structured data in {file.relative_to(dist)}")
         if 'theme-color' not in text: fail(errors, f"missing theme color in {file.relative_to(dist)}")

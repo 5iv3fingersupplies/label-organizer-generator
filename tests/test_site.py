@@ -34,6 +34,13 @@ class SiteTest(unittest.TestCase):
         self.assertIn("tag=fivefingersup-20", html)
         self.assertIn('rel="sponsored nofollow noopener"', html)
         self.assertIn("As an Amazon Associate I earn from qualifying purchases.", html)
+        home=(ROOT/"site/index.html").read_text(encoding="utf-8")
+        tool=next((ROOT/"site/tools").glob("*/index.html")).read_text(encoding="utf-8")
+        about=(ROOT/"site/about/index.html").read_text(encoding="utf-8")
+        self.assertNotIn('class="ribbon"', home)
+        self.assertNotIn("As an Amazon Associate I earn from qualifying purchases.", home)
+        self.assertIn("As an Amazon Associate I earn from qualifying purchases.", tool)
+        self.assertIn("As an Amazon Associate I earn from qualifying purchases.", about)
     def test_operations_controls(self):
         ops=json.loads((ROOT/"data/operations.json").read_text(encoding="utf-8"))
         self.assertFalse(ops["kill_switch"])

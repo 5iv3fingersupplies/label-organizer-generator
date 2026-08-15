@@ -47,6 +47,11 @@ def affiliate_href(monetization, query):
         return ""
     return f"https://www.amazon.com/s?k={quote_plus(query)}&tag={quote_plus(tag)}"
 
+def affiliate_note(monetization):
+    if not monetization.get("amazon_search_links_enabled") or not monetization.get("amazon_associates_tag", "").strip():
+        return ""
+    return '<p class="affiliate-note"><strong>As an Amazon Associate I earn from qualifying purchases.</strong> Product links may earn a commission at no extra cost to you.</p>'
+
 def layout(site, monetization, title, description, path, body, extra_js=False, page_type="WebPage"):
     design = load("design.json", {"short":"FF","accent":"#0f766e","secondary":"#1d4ed8","warm":"#f59e0b","surface":"#f8fbff","soft":"#eaf2ff","primary_cta":"Start","promise":site["tagline"]})
     d = depth(path)
@@ -61,7 +66,7 @@ def layout(site, monetization, title, description, path, body, extra_js=False, p
 <link rel="canonical" href="{esc(url)}"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:url" content="{esc(url)}"><meta property="og:image" content="{esc(image)}"><meta property="og:type" content="website">
 <meta name="theme-color" content="{esc(design["accent"])}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{esc(image)}"><link rel="alternate" type="application/atom+xml" title="{esc(site["name"])} updates" href="{rel(d, "feed.xml")}"><link rel="stylesheet" href="{rel(d, "assets/css/site.css")}"><script type="application/ld+json">{json.dumps(schema)}</script></head>
 <body style="--accent:{esc(design['accent'])};--secondary:{esc(design['secondary'])};--warm:{esc(design['warm'])};--surface:{esc(design['surface'])};--soft:{esc(design['soft'])}"><a class="skip-link" href="#main">Skip to content</a><header class="topbar"><nav class="nav" aria-label="Main navigation"><a class="brand" href="{rel(d, "index.html")}"><span class="brand-mark">{esc(design["short"])}</span>{esc(site["name"])}</a><div class="nav-links"><a href="{rel(d, "start-here/index.html")}">Start</a><a href="{rel(d, "tools/index.html")}">Tools</a><a href="{rel(d, "seasonal/index.html")}">Seasonal</a><a href="{rel(d, "guides/index.html")}">Guides</a><a href="{rel(d, "recommendations/index.html")}">Fit</a><a class="nav-cta" href="{rel(d, "tools/index.html")}">{esc(design["primary_cta"])}</a></div></nav></header>
-<div class="ribbon"><div class="inner">{monetization["disclosure"]}</div></div><main id="main">{body}</main><footer class="footer"><div class="wrap"><div><strong>{esc(site["name"])}</strong><p class="fineprint">{esc(site["model"])}</p></div><div class="nav-links"><a href="{rel(d, "about/index.html")}">About</a><a href="{rel(d, "publisher-standards/index.html")}">Standards</a><a href="{rel(d, "monetization/index.html")}">Monetization</a><a href="{rel(d, "feed.xml")}">RSS</a><a href="{rel(d, "sitemap.xml")}">Sitemap</a></div></div></footer>{tools_js}</body></html>'''
+<main id="main">{body}</main><footer class="footer"><div class="wrap"><div><strong>{esc(site["name"])}</strong><p class="fineprint">{esc(site["model"])}</p></div><div class="nav-links"><a href="{rel(d, "about/index.html")}">About</a><a href="{rel(d, "publisher-standards/index.html")}">Standards</a><a href="{rel(d, "monetization/index.html")}">Monetization</a><a href="{rel(d, "feed.xml")}">RSS</a><a href="{rel(d, "sitemap.xml")}">Sitemap</a></div></div></footer>{tools_js}</body></html>'''
 
 def card(title, description, href, tag=""):
     tag_html = f'<span class="tag">{esc(tag)}</span>' if tag else ""
@@ -107,7 +112,7 @@ def recommendation_page(site, monetization, rec, tools, guides):
     guide_links = "".join(card(g["title"], g["description"], f'../../guides/{g["slug"]}/index.html', g["category"]) for g in related_guides(guides, category, 3))
     tool_links = "".join(card(t["title"], t["description"], f'../../tools/{t["slug"]}/index.html', t["category"]) for t in related[:4])
     href = affiliate_href(monetization, rec["query"])
-    action = f'<a class="button" href="{esc(href)}" rel="sponsored nofollow noopener" data-affiliate="{esc(rec["id"])}">Open option search</a>' if href else ""
+    action = f'{affiliate_note(monetization)}<p><a class="button" href="{esc(href)}" rel="sponsored nofollow noopener" data-affiliate="{esc(rec["id"])}">Open option search</a></p>' if href else ""
     checks = [
         "Measure the space, count, or capacity the item must support before shopping.",
         "Prefer clear manufacturer dimensions, materials, compatibility notes, and care instructions.",
@@ -138,7 +143,7 @@ def tool_plan_page(site, monetization, tool, recs):
 <h2>Inputs to confirm</h2>{bullet_list(inputs)}
 <h2>Decision sequence</h2>{bullet_list(["Run the calculator with conservative inputs.", "Write down the resulting count, size, or capacity.", "Compare that result with manufacturer dimensions and included-part details.", "Buy the narrowest item category that solves the measured need."])}
 <h2>Common overbuying traps</h2>{bullet_list(["Buying multi-packs before the workflow is proven.", "Choosing a larger size because it feels safer.", "Ignoring storage, cleanup, charging, or refill requirements."])}</article>
-<section class="band"><div class="wrap"><h2 class="section-title">Product-fit links</h2><div class="grid">{rec_cards}</div></div></section>'''
+<section class="band"><div class="wrap"><h2 class="section-title">Product-fit links</h2>{affiliate_note(monetization)}<div class="grid">{rec_cards}</div></div></section>'''
     return body
 
 def checklist_page(site, guide):
@@ -163,7 +168,7 @@ def category_page(category, tools, guides, recs, monetization):
     return f'''<section class="page-head"><span class="tag">Topic hub</span><h1>{esc(category)} tools and checklists</h1><p>Calculator-first pages for this topic cluster.</p></section>
 <section class="band"><div class="wrap"><h2 class="section-title">Tools</h2><div class="grid">{tool_cards or "<p>More tools are queued for this topic.</p>"}</div></div></section>
 <section class="band"><div class="wrap"><h2 class="section-title">Guides</h2><div class="grid">{guide_cards or "<p>More guides are queued for this topic.</p>"}</div></div></section>
-<section class="band"><div class="wrap"><h2 class="section-title">Product-fit links</h2><div class="grid">{rec_cards}</div></div></section>'''
+<section class="band"><div class="wrap"><h2 class="section-title">Product-fit links</h2>{affiliate_note(monetization)}<div class="grid">{rec_cards}</div></div></section>'''
 
 
 def seasonal_page(entry, tools_by_slug, guides_by_slug, recs, monetization):
@@ -177,7 +182,7 @@ def seasonal_page(entry, tools_by_slug, guides_by_slug, recs, monetization):
 <h2>Skip these traps</h2>{bullet_list(entry.get("avoid_prompts", []))}</article>
 <section class="band"><div class="wrap"><h2 class="section-title">Tools for this moment</h2><div class="grid">{tool_cards}</div></div></section>
 <section class="band alt"><div class="wrap"><h2 class="section-title">Supporting guides</h2><div class="grid">{guide_cards}</div></div></section>
-<section class="band"><div class="wrap"><h2 class="section-title">Product-fit links</h2><div class="grid">{rec_cards}</div></div></section>'''
+<section class="band"><div class="wrap"><h2 class="section-title">Product-fit links</h2>{affiliate_note(monetization)}<div class="grid">{rec_cards}</div></div></section>'''
 
 def start_here_page(site, tools, guides, editorial):
     first_tools = "".join(card(t["title"], t["description"], f'../tools/{t["slug"]}/index.html', t["category"]) for t in tools[:3])
@@ -194,7 +199,7 @@ def publisher_standards_page(site, editorial):
     channels = editorial.get("traffic_channels", [])
     rows = "".join(f'<li><strong>{esc(item["channel"])}:</strong> {esc(item["implementation"])}</li>' for item in channels)
     standards = [
-        "Every monetized page carries the Amazon Associate disclosure.",
+        "Every page with outbound affiliate product links carries the Amazon Associate disclosure near those links.",
         "Product-fit links use public search destinations instead of rehosted marketplace content.",
         "Calculator inputs stay in the visitor browser.",
         "No paid placement is accepted inside the automated build.",
@@ -252,7 +257,7 @@ def main():
     write(out / "tools/index.html", layout(site, monetization, "Tools", "Interactive browser-only tools.", "tools/index.html", f'<section class="page-head"><h1>Tools</h1><p>Use these calculators and generators before buying supplies or templates.</p></section><section class="wrap"><div class="grid">{tool_cards.replace("tools/","")}</div></section>'))
     for t in tools:
         rec_html = recommendation_cards(t["recommendation_ids"], recs, monetization, "../../")
-        body = f'<section class="page-head"><span class="tag">{esc(t["category"])}</span><h1>{esc(t["title"])}</h1><p>{esc(t["description"])}</p></section><section class="content tool-shell"><div class="tool-panel"><form class="tool-form" data-calculator="{esc(t["kind"])}">{render_fields(t["fields"])}<button type="submit">Generate</button></form></div><div class="result-box" aria-live="polite"><p>Enter your numbers and generate a result.</p></div></section><section class="band"><div class="wrap"><h2 class="section-title">Next planning step</h2><p><a class="button secondary" href="../../tool-plans/{esc(t["slug"])}/index.html">Open the buying plan</a></p></div></section><section class="band"><div class="wrap"><h2 class="section-title">Product-fit links</h2><div class="grid">{rec_html}</div></div></section>'
+        body = f'<section class="page-head"><span class="tag">{esc(t["category"])}</span><h1>{esc(t["title"])}</h1><p>{esc(t["description"])}</p></section><section class="content tool-shell"><div class="tool-panel"><form class="tool-form" data-calculator="{esc(t["kind"])}">{render_fields(t["fields"])}<button type="submit">Generate</button></form></div><div class="result-box" aria-live="polite"><p>Enter your numbers and generate a result.</p></div></section><section class="band"><div class="wrap"><h2 class="section-title">Next planning step</h2><p><a class="button secondary" href="../../tool-plans/{esc(t["slug"])}/index.html">Open the buying plan</a></p></div></section><section class="band"><div class="wrap"><h2 class="section-title">Product-fit links</h2>{affiliate_note(monetization)}<div class="grid">{rec_html}</div></div></section>'
         write(out / f'tools/{t["slug"]}/index.html', layout(site, monetization, t["title"], t["description"], f'tools/{t["slug"]}/index.html', body, True, "SoftwareApplication"))
 
     guide_index_cards = "".join(card(g["title"], g["description"], f'{g["slug"]}/index.html', g["category"]) for g in guides)
@@ -292,12 +297,12 @@ def main():
     write(out / "publisher-standards/index.html", layout(site, monetization, "Publisher Standards", "Affiliate publisher standards, trust cues, and no-cost traffic approach.", "publisher-standards/index.html", publisher_standards_page(site, editorial)))
 
     static = {
-        "about": ("About", f"{site['name']} is a browser-only static tool business with external monetization links."),
-        "privacy": ("Privacy", "This site does not use accounts, comments, payment forms, server analytics, or paid tracking. Calculator inputs stay in the browser. Affiliate click counts, when available, stay in the visitor browser local storage."),
-        "monetization": ("Monetization", monetization["disclosure"] + " The site does not display Amazon reviews, ratings, prices, availability, or images. Checkout links are handled by external no-monthly-fee storefronts when configured."),
+        "about": ("About", f"{site['name']} is a browser-only static tool business with external monetization links.", f'<p>{esc(site["name"])} is a browser-only static tool business with external monetization links.</p>{affiliate_note(monetization)}'),
+        "privacy": ("Privacy", "This site does not use accounts, comments, payment forms, server analytics, or paid tracking. Calculator inputs stay in the browser. Affiliate click counts, when available, stay in the visitor browser local storage.", '<p>This site does not use accounts, comments, payment forms, server analytics, or paid tracking. Calculator inputs stay in the browser. Affiliate click counts, when available, stay in the visitor browser local storage.</p>'),
+        "monetization": ("Monetization", "How this site earns from product-fit links.", f'<p>{monetization["disclosure"]} The site does not display Amazon reviews, ratings, prices, availability, or images. Checkout links are handled by external no-monthly-fee storefronts when configured.</p>'),
     }
-    for slug, (title, text) in static.items():
-        write(out / f"{slug}/index.html", layout(site, monetization, title, text, f"{slug}/index.html", f'<section class="page-head"><h1>{esc(title)}</h1><p>{esc(text)}</p></section>'))
+    for slug, (title, text, page_body) in static.items():
+        write(out / f"{slug}/index.html", layout(site, monetization, title, text, f"{slug}/index.html", f'<section class="page-head"><h1>{esc(title)}</h1><p>{esc(text)}</p></section><article class="content">{page_body}</article>'))
 
     feed_items = [{"title": site["name"], "description": site["tagline"], "path": "index.html"}]
     feed_items += [{"title": t["title"], "description": t["description"], "path": f'tools/{t["slug"]}/index.html'} for t in tools]
