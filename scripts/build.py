@@ -30,7 +30,10 @@ def depth(path):
 
 def absolute(base, path):
     clean = path.replace("index.html", "").strip("/")
-    return base.rstrip("/") + ("/" if not clean else "/" + clean + "/")
+    if not clean:
+        return base.rstrip("/") + "/"
+    suffix = "" if "." in clean.rsplit("/", 1)[-1] else "/"
+    return base.rstrip("/") + "/" + clean + suffix
 
 def write(path, text):
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -57,8 +60,8 @@ def layout(site, monetization, title, description, path, body, extra_js=False, p
 <title>{esc(title)} | {esc(site["name"])}</title><meta name="description" content="{esc(description)}">
 <link rel="canonical" href="{esc(url)}"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:url" content="{esc(url)}"><meta property="og:image" content="{esc(image)}"><meta property="og:type" content="website">
 <meta name="theme-color" content="{esc(design["accent"])}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{esc(image)}"><link rel="alternate" type="application/atom+xml" title="{esc(site["name"])} updates" href="{rel(d, "feed.xml")}"><link rel="stylesheet" href="{rel(d, "assets/css/site.css")}"><script type="application/ld+json">{json.dumps(schema)}</script></head>
-<body style="--accent:{esc(design['accent'])};--secondary:{esc(design['secondary'])};--warm:{esc(design['warm'])};--surface:{esc(design['surface'])};--soft:{esc(design['soft'])}"><a class="skip-link" href="#main">Skip to content</a><header class="topbar"><nav class="nav" aria-label="Main navigation"><a class="brand" href="{rel(d, "index.html")}"><span class="brand-mark">{esc(design["short"])}</span>{esc(site["name"])}</a><div class="nav-links"><a href="{rel(d, "start-here/index.html")}">Start Here</a><a href="{rel(d, "tools/index.html")}">Tools</a><a href="{rel(d, "seasonal/index.html")}">Seasonal</a><a href="{rel(d, "guides/index.html")}">Guides</a><a href="{rel(d, "recommendations/index.html")}">Product Fit</a><a class="nav-cta" href="{rel(d, "tools/index.html")}">{esc(design["primary_cta"])}</a></div></nav></header>
-<div class="ribbon"><div class="inner">{monetization["disclosure"]}</div></div><main id="main">{body}</main><footer class="footer"><div class="wrap"><div><strong>{esc(site["name"])}</strong><p class="fineprint">{esc(site["model"])}</p></div><div class="nav-links"><a href="{rel(d, "about/index.html")}">About</a><a href="{rel(d, "publisher-standards/index.html")}">Publisher Standards</a><a href="{rel(d, "monetization/index.html")}">Monetization</a><a href="{rel(d, "feed.xml")}">RSS</a><a href="{rel(d, "sitemap.xml")}">Sitemap</a></div></div></footer>{tools_js}</body></html>'''
+<body style="--accent:{esc(design['accent'])};--secondary:{esc(design['secondary'])};--warm:{esc(design['warm'])};--surface:{esc(design['surface'])};--soft:{esc(design['soft'])}"><a class="skip-link" href="#main">Skip to content</a><header class="topbar"><nav class="nav" aria-label="Main navigation"><a class="brand" href="{rel(d, "index.html")}"><span class="brand-mark">{esc(design["short"])}</span>{esc(site["name"])}</a><div class="nav-links"><a href="{rel(d, "start-here/index.html")}">Start</a><a href="{rel(d, "tools/index.html")}">Tools</a><a href="{rel(d, "seasonal/index.html")}">Seasonal</a><a href="{rel(d, "guides/index.html")}">Guides</a><a href="{rel(d, "recommendations/index.html")}">Fit</a><a class="nav-cta" href="{rel(d, "tools/index.html")}">{esc(design["primary_cta"])}</a></div></nav></header>
+<div class="ribbon"><div class="inner">{monetization["disclosure"]}</div></div><main id="main">{body}</main><footer class="footer"><div class="wrap"><div><strong>{esc(site["name"])}</strong><p class="fineprint">{esc(site["model"])}</p></div><div class="nav-links"><a href="{rel(d, "about/index.html")}">About</a><a href="{rel(d, "publisher-standards/index.html")}">Standards</a><a href="{rel(d, "monetization/index.html")}">Monetization</a><a href="{rel(d, "feed.xml")}">RSS</a><a href="{rel(d, "sitemap.xml")}">Sitemap</a></div></div></footer>{tools_js}</body></html>'''
 
 def card(title, description, href, tag=""):
     tag_html = f'<span class="tag">{esc(tag)}</span>' if tag else ""

@@ -23,6 +23,12 @@ class SiteTest(unittest.TestCase):
         feed=(ROOT/"site/feed.xml").read_text(encoding="utf-8")
         self.assertIn("<feed", feed)
 
+    def test_design_system_polish(self):
+        css=(ROOT/"assets/css/site.css").read_text(encoding="utf-8")
+        self.assertIn("--font-display", css)
+        self.assertIn("repeating-linear-gradient", css)
+        self.assertNotIn("vw", css)
+
     def test_monetized_links(self):
         html="\n".join(p.read_text(encoding="utf-8") for p in (ROOT/"site").rglob("*.html"))
         self.assertIn("tag=fivefingersup-20", html)
