@@ -46,7 +46,7 @@ def target_exists(dist, current, href):
 
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument("--dist", default="site"); args=ap.parse_args()
-    errors=[]; tools=load("tools.json"); guides=load("guides.json"); monetization=load("monetization.json"); operations=load("operations.json"); accelerator=load("accelerator.json", {"target_min_pages": 50}); recommendations=load("recommendations.json")
+    errors=[]; site=load("site.json"); tools=load("tools.json"); guides=load("guides.json"); monetization=load("monetization.json"); operations=load("operations.json"); accelerator=load("accelerator.json", {"target_min_pages": 70}); recommendations=load("recommendations.json"); editorial=load("editorial_calendar.json", {"seasonal_pages": []})
     recs={r["id"] for r in recommendations}
     if monetization.get("cost_cap_usd") != 0: fail(errors, "cost cap is not 0")
     if operations.get("max_incremental_cost_usd") != 0: fail(errors, "operations cost cap is not 0")
@@ -66,11 +66,22 @@ def main():
         rec_ids.add(rec["id"]); scan(errors, f"recommendation:{rec['id']}", json.dumps(rec))
     if len(tools) < 5: fail(errors, "fewer than 5 tools")
     if len(guides) < 10: fail(errors, "fewer than 10 guides")
+    tool_slugs={t["slug"] for t in tools}; guide_slugs={g["slug"] for g in guides}; seasonal_slugs=set()
+    if len(editorial.get("seasonal_pages", [])) < 12: fail(errors, "fewer than 12 seasonal pages")
+    for entry in editorial.get("seasonal_pages", []):
+        if entry["slug"] in seasonal_slugs: fail(errors, f"duplicate seasonal slug {entry['slug']}")
+        seasonal_slugs.add(entry["slug"]); scan(errors, f"seasonal:{entry['slug']}", json.dumps(entry))
+        for slug in entry.get("tool_slugs", []):
+            if slug not in tool_slugs: fail(errors, f"unknown seasonal tool {slug}")
+        for slug in entry.get("guide_slugs", []):
+            if slug not in guide_slugs: fail(errors, f"unknown seasonal guide {slug}")
+        for rec in entry.get("recommendation_ids", []):
+            if rec not in recs: fail(errors, f"unknown seasonal recommendation {rec}")
     dist=(ROOT/args.dist).resolve()
     html=list(dist.rglob("*.html"))
     target_min=int(accelerator.get("target_min_pages", 50))
     if len(html) < target_min: fail(errors, f"fewer than target minimum html pages: {len(html)} < {target_min}")
-    required=["sitemap.xml","robots.txt","assets/css/site.css","assets/js/tools.js","assets/img/hero-v2.png","recommendations/index.html","tool-plans/index.html","checklists/index.html","categories/index.html"]
+    required=["sitemap.xml","robots.txt","feed.xml","assets/css/site.css","assets/js/tools.js","assets/img/hero-v2.png","start-here/index.html","seasonal/index.html","publisher-standards/index.html","recommendations/index.html","tool-plans/index.html","checklists/index.html","categories/index.html"]
     for req in required:
         if not (dist/req).exists(): fail(errors, f"missing {req}")
     for rec in recommendations:
@@ -85,6 +96,8 @@ def main():
         parser=Parser(); parser.feed(text)
         for href in parser.hrefs:
             if not target_exists(dist, file, href): fail(errors, f"broken internal link from {file.relative_to(dist)} to {href}")
+    feed=(dist/"feed.xml").read_text(encoding="utf-8")
+    if "<feed" not in feed or site["base_url"].rstrip("/") not in feed: fail(errors, "feed.xml is not a valid site feed")
     js=(dist/"assets/js/tools.js").read_text(encoding="utf-8")
     if "fff_affiliate_click_counts" not in js: fail(errors, "missing browser-local affiliate click counter")
     workflow_text="\n".join(p.read_text(encoding="utf-8") for p in (ROOT/".github/workflows").glob("*.yml"))

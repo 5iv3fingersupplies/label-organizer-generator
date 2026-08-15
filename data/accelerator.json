@@ -1,10 +1,14 @@
 {
-  "target_min_pages": 50,
+  "target_min_pages": 70,
   "page_types": [
     "product-fit",
     "tool-buying-plan",
     "printable-checklist",
-    "topic-hub"
+    "topic-hub",
+    "seasonal-intent-page",
+    "publisher-standards",
+    "atom-feed",
+    "start-routing-page"
   ],
   "intent": "accelerate qualified long-tail discovery without paid traffic or thin pages",
   "category_hubs": [

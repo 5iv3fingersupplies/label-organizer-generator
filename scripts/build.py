@@ -56,9 +56,9 @@ def layout(site, monetization, title, description, path, body, extra_js=False, p
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)} | {esc(site["name"])}</title><meta name="description" content="{esc(description)}">
 <link rel="canonical" href="{esc(url)}"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:url" content="{esc(url)}"><meta property="og:image" content="{esc(image)}"><meta property="og:type" content="website">
-<meta name="theme-color" content="{esc(design["accent"])}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{esc(image)}"><meta name="theme-color" content="{esc(design["accent"])}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{esc(image)}"><link rel="stylesheet" href="{rel(d, "assets/css/site.css")}"><script type="application/ld+json">{json.dumps(schema)}</script></head>
-<body style="--accent:{esc(design['accent'])};--secondary:{esc(design['secondary'])};--warm:{esc(design['warm'])};--surface:{esc(design['surface'])};--soft:{esc(design['soft'])}"><a class="skip-link" href="#main">Skip to content</a><header class="topbar"><nav class="nav" aria-label="Main navigation"><a class="brand" href="{rel(d, "index.html")}"><span class="brand-mark">{esc(design["short"])}</span>{esc(site["name"])}</a><div class="nav-links"><a href="{rel(d, "tools/index.html")}">Tools</a><a href="{rel(d, "guides/index.html")}">Guides</a><a href="{rel(d, "recommendations/index.html")}">Product Fit</a><a href="{rel(d, "checklists/index.html")}">Checklists</a><a href="{rel(d, "privacy/index.html")}">Privacy</a><a class="nav-cta" href="{rel(d, "tools/index.html")}">{esc(design["primary_cta"])}</a></div></nav></header>
-<div class="ribbon"><div class="inner">{monetization["disclosure"]}</div></div><main id="main">{body}</main><footer class="footer"><div class="wrap"><div><strong>{esc(site["name"])}</strong><p class="fineprint">{esc(site["model"])}</p></div><div class="nav-links"><a href="{rel(d, "about/index.html")}">About</a><a href="{rel(d, "monetization/index.html")}">Monetization</a><a href="{rel(d, "sitemap.xml")}">Sitemap</a></div></div></footer>{tools_js}</body></html>'''
+<meta name="theme-color" content="{esc(design["accent"])}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{esc(image)}"><link rel="alternate" type="application/atom+xml" title="{esc(site["name"])} updates" href="{rel(d, "feed.xml")}"><link rel="stylesheet" href="{rel(d, "assets/css/site.css")}"><script type="application/ld+json">{json.dumps(schema)}</script></head>
+<body style="--accent:{esc(design['accent'])};--secondary:{esc(design['secondary'])};--warm:{esc(design['warm'])};--surface:{esc(design['surface'])};--soft:{esc(design['soft'])}"><a class="skip-link" href="#main">Skip to content</a><header class="topbar"><nav class="nav" aria-label="Main navigation"><a class="brand" href="{rel(d, "index.html")}"><span class="brand-mark">{esc(design["short"])}</span>{esc(site["name"])}</a><div class="nav-links"><a href="{rel(d, "start-here/index.html")}">Start Here</a><a href="{rel(d, "tools/index.html")}">Tools</a><a href="{rel(d, "seasonal/index.html")}">Seasonal</a><a href="{rel(d, "guides/index.html")}">Guides</a><a href="{rel(d, "recommendations/index.html")}">Product Fit</a><a class="nav-cta" href="{rel(d, "tools/index.html")}">{esc(design["primary_cta"])}</a></div></nav></header>
+<div class="ribbon"><div class="inner">{monetization["disclosure"]}</div></div><main id="main">{body}</main><footer class="footer"><div class="wrap"><div><strong>{esc(site["name"])}</strong><p class="fineprint">{esc(site["model"])}</p></div><div class="nav-links"><a href="{rel(d, "about/index.html")}">About</a><a href="{rel(d, "publisher-standards/index.html")}">Publisher Standards</a><a href="{rel(d, "monetization/index.html")}">Monetization</a><a href="{rel(d, "feed.xml")}">RSS</a><a href="{rel(d, "sitemap.xml")}">Sitemap</a></div></div></footer>{tools_js}</body></html>'''
 
 def card(title, description, href, tag=""):
     tag_html = f'<span class="tag">{esc(tag)}</span>' if tag else ""
@@ -162,6 +162,61 @@ def category_page(category, tools, guides, recs, monetization):
 <section class="band"><div class="wrap"><h2 class="section-title">Guides</h2><div class="grid">{guide_cards or "<p>More guides are queued for this topic.</p>"}</div></div></section>
 <section class="band"><div class="wrap"><h2 class="section-title">Product-fit links</h2><div class="grid">{rec_cards}</div></div></section>'''
 
+
+def seasonal_page(entry, tools_by_slug, guides_by_slug, recs, monetization):
+    tool_cards = "".join(card(t["title"], t["description"], f'../../tools/{t["slug"]}/index.html', t["category"]) for t in (tools_by_slug[s] for s in entry.get("tool_slugs", []) if s in tools_by_slug))
+    guide_cards = "".join(card(g["title"], g["description"], f'../../guides/{g["slug"]}/index.html', g["category"]) for g in (guides_by_slug[s] for s in entry.get("guide_slugs", []) if s in guides_by_slug))
+    rec_cards = recommendation_cards([rid for rid in entry.get("recommendation_ids", []) if rid in recs], recs, monetization, "../../")
+    return f'''<section class="page-head"><span class="tag">Seasonal intent</span><h1>{esc(entry["title"])}</h1><p>{esc(entry["description"])}</p></section>
+<article class="content"><div class="notice"><strong>Why now:</strong> {esc(entry["reason"])}</div>
+<h2>Decision prompts</h2>{bullet_list(entry.get("decision_prompts", []))}
+<h2>Use this sequence</h2>{bullet_list(["Open the calculator before browsing.", "Use the matching guide or checklist to catch setup details.", "Open a product-fit link only when the need is specific.", "Bookmark or follow the feed for the next seasonal pass."])}
+<h2>Skip these traps</h2>{bullet_list(entry.get("avoid_prompts", []))}</article>
+<section class="band"><div class="wrap"><h2 class="section-title">Tools for this moment</h2><div class="grid">{tool_cards}</div></div></section>
+<section class="band alt"><div class="wrap"><h2 class="section-title">Supporting guides</h2><div class="grid">{guide_cards}</div></div></section>
+<section class="band"><div class="wrap"><h2 class="section-title">Product-fit links</h2><div class="grid">{rec_cards}</div></div></section>'''
+
+def start_here_page(site, tools, guides, editorial):
+    first_tools = "".join(card(t["title"], t["description"], f'../tools/{t["slug"]}/index.html', t["category"]) for t in tools[:3])
+    first_guides = "".join(card(g["title"], g["description"], f'../guides/{g["slug"]}/index.html', g["category"]) for g in guides[:3])
+    seasonal = editorial.get("seasonal_pages", [])[:3]
+    seasonal_cards = "".join(card(e["title"], e["description"], f'../seasonal/{e["slug"]}/index.html', e["month"]) for e in seasonal)
+    return f'''<section class="page-head"><span class="tag">Start here</span><h1>Pick the fastest path to a useful decision</h1><p>{esc(site["tagline"])} Start with a calculator, confirm the details, then open only the product-fit links that match the result.</p></section>
+<section class="decision-band"><div class="decision-steps"><div class="step"><strong>1. Search intent</strong><span>Choose the page that matches the job.</span></div><div class="step"><strong>2. Calculator proof</strong><span>Use numbers before product browsing.</span></div><div class="step"><strong>3. Lower friction</strong><span>No account, no checkout, and local inputs.</span></div></div></section>
+<section class="band"><div class="wrap"><h2 class="section-title">Best first tools</h2><div class="grid">{first_tools}</div></div></section>
+<section class="band alt"><div class="wrap"><h2 class="section-title">Seasonal entry points</h2><div class="grid">{seasonal_cards}</div></div></section>
+<section class="band"><div class="wrap"><h2 class="section-title">Trust-building guides</h2><div class="grid">{first_guides}</div></div></section>'''
+
+def publisher_standards_page(site, editorial):
+    channels = editorial.get("traffic_channels", [])
+    rows = "".join(f'<li><strong>{esc(item["channel"])}:</strong> {esc(item["implementation"])}</li>' for item in channels)
+    standards = [
+        "Every monetized page carries the Amazon Associate disclosure.",
+        "Product-fit links use public search destinations instead of rehosted marketplace content.",
+        "Calculator inputs stay in the visitor browser.",
+        "No paid placement is accepted inside the automated build.",
+        "Volatile marketplace details are omitted unless a permitted source can verify them during the build.",
+    ]
+    return f'''<section class="page-head"><span class="tag">Publisher standards</span><h1>How this site earns trust before clicks</h1><p>{esc(site["name"])} is built as a self-serve publisher property: useful pages first, disclosed affiliate links second.</p></section>
+<article class="content"><h2>Operating standards</h2>{bullet_list(standards)}<h2>Traffic approach</h2><ul>{rows}</ul><h2>Partner fit</h2><p>Future direct affiliate programs should match the audience, allow clear disclosure, and support self-serve transactions without creating a customer-support queue for this site.</p></article>'''
+
+def feed_xml(site, items):
+    updated = date.today().isoformat()
+    entries = []
+    for item in items[:40]:
+        url = absolute(site["base_url"], item["path"])
+        entries.append(f'''<entry><title>{esc(item["title"])}</title><link href="{esc(url)}"/><id>{esc(url)}</id><updated>{updated}</updated><summary>{esc(item["description"])}</summary></entry>''')
+    return f'''<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+<title>{esc(site["name"])} updates</title>
+<link href="{esc(site["base_url"].rstrip("/") + "/feed.xml")}" rel="self"/>
+<link href="{esc(site["base_url"].rstrip("/") + "/")}"/>
+<updated>{updated}</updated>
+<id>{esc(site["base_url"].rstrip("/") + "/")}</id>
+{''.join(entries)}
+</feed>
+'''
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", default="site")
@@ -172,6 +227,7 @@ def main():
     out.mkdir(parents=True)
     site, monetization = load("site.json"), load("monetization.json")
     tools, guides = load("tools.json"), load("guides.json")
+    editorial = load("editorial_calendar.json", {"seasonal_pages": [], "traffic_channels": []})
     accelerator = load("accelerator.json", {"target_min_pages": 50})
     recs = {r["id"]: r for r in load("recommendations.json")}
     shutil.copytree(ASSETS, out / "assets")
@@ -185,6 +241,9 @@ def main():
     cue_row = '<div class="cue-row"><span class="cue">Free tools</span><span class="cue">No account</span><span class="cue">Private inputs</span><span class="cue">Affiliate disclosed</span></div>'
     decision = '<section class="decision-band"><div class="decision-steps"><div class="step"><strong>1. Measure</strong><span>Use the calculator before browsing.</span></div><div class="step"><strong>2. Narrow</strong><span>Match the result to a product category.</span></div><div class="step"><strong>3. Decide</strong><span>Open only the links that fit the job.</span></div></div></section>'
     home = f'<section class="hero"><div><span class="tag">Decision-first tools</span><h1>{esc(design["hero_title"])}</h1><p class="hero-lede">{esc(design["promise"])}</p>{cue_row}<div class="hero-actions"><a class="button" href="tools/index.html">{esc(design["primary_cta"])}</a><a class="button secondary" href="recommendations/index.html">Compare product fit</a></div></div>{visual}</section>{decision}<section class="band"><div class="wrap"><span class="section-kicker">Start here</span><h2 class="section-title">Useful tools with a buying next step</h2><div class="grid">{tool_cards}</div></div></section><section class="band alt"><div class="wrap"><span class="section-kicker">Reduce regret</span><h2 class="section-title">Product-fit pages for high-intent decisions</h2><div class="grid">{rec_cards}</div></div></section><section class="band"><div class="wrap"><span class="section-kicker">Evergreen help</span><h2 class="section-title">Guides and checklists</h2><div class="grid">{guide_cards}</div></div></section>'
+    seasonal_preview = editorial.get("seasonal_pages", [])[:3]
+    seasonal_cards = "".join(card(e["title"], e["description"], f'seasonal/{e["slug"]}/index.html', e["month"]) for e in seasonal_preview)
+    home += f'<section class="band alt"><div class="wrap"><span class="section-kicker">Seasonal intent</span><h2 class="section-title">Timely entry points for search visitors</h2><div class="grid">{seasonal_cards}</div><p class="feed-callout"><a href="feed.xml">Follow the free update feed</a> for new calculator-first pages without an account.</p></div></section>'
     write(out / "index.html", layout(site, monetization, site["name"], site["tagline"], "index.html", home))
 
     write(out / "tools/index.html", layout(site, monetization, "Tools", "Interactive browser-only tools.", "tools/index.html", f'<section class="page-head"><h1>Tools</h1><p>Use these calculators and generators before buying supplies or templates.</p></section><section class="wrap"><div class="grid">{tool_cards.replace("tools/","")}</div></section>'))
@@ -220,6 +279,15 @@ def main():
     for c in category_names:
         write(out / f'categories/{slugify(c)}/index.html', layout(site, monetization, c + " Hub", "Tools and checklists for " + c, f'categories/{slugify(c)}/index.html', category_page(c, tools, guides, recs, monetization)))
 
+    tools_by_slug = {t["slug"]: t for t in tools}
+    guides_by_slug = {g["slug"]: g for g in guides}
+    write(out / "start-here/index.html", layout(site, monetization, "Start Here", "Fast routing to the best tool, guide, or seasonal page.", "start-here/index.html", start_here_page(site, tools, guides, editorial)))
+    seasonal_index_cards = "".join(card(e["title"], e["description"], f'{e["slug"]}/index.html', e["month"]) for e in editorial.get("seasonal_pages", []))
+    write(out / "seasonal/index.html", layout(site, monetization, "Seasonal Decision Pages", "Timely calculator-first pages for recurring buying moments.", "seasonal/index.html", f'<section class="page-head"><h1>Seasonal decision pages</h1><p>Recurring entry points built around buyer intent, practical timing, and calculator-first decisions.</p></section><section class="wrap"><div class="grid">{seasonal_index_cards}</div></section>'))
+    for entry in editorial.get("seasonal_pages", []):
+        write(out / f'seasonal/{entry["slug"]}/index.html', layout(site, monetization, entry["title"], entry["description"], f'seasonal/{entry["slug"]}/index.html', seasonal_page(entry, tools_by_slug, guides_by_slug, recs, monetization)))
+    write(out / "publisher-standards/index.html", layout(site, monetization, "Publisher Standards", "Affiliate publisher standards, trust cues, and no-cost traffic approach.", "publisher-standards/index.html", publisher_standards_page(site, editorial)))
+
     static = {
         "about": ("About", f"{site['name']} is a browser-only static tool business with external monetization links."),
         "privacy": ("Privacy", "This site does not use accounts, comments, payment forms, server analytics, or paid tracking. Calculator inputs stay in the browser. Affiliate click counts, when available, stay in the visitor browser local storage."),
@@ -228,11 +296,16 @@ def main():
     for slug, (title, text) in static.items():
         write(out / f"{slug}/index.html", layout(site, monetization, title, text, f"{slug}/index.html", f'<section class="page-head"><h1>{esc(title)}</h1><p>{esc(text)}</p></section>'))
 
+    feed_items = [{"title": site["name"], "description": site["tagline"], "path": "index.html"}]
+    feed_items += [{"title": t["title"], "description": t["description"], "path": f'tools/{t["slug"]}/index.html'} for t in tools]
+    feed_items += [{"title": e["title"], "description": e["description"], "path": f'seasonal/{e["slug"]}/index.html'} for e in editorial.get("seasonal_pages", [])]
+    feed_items += [{"title": g["title"], "description": g["description"], "path": f'guides/{g["slug"]}/index.html'} for g in guides[:12]]
+    write(out / "feed.xml", feed_xml(site, feed_items))
     paths = [str(p.relative_to(out)).replace("\\", "/") for p in out.rglob("*.html")]
     urls = "\n".join(f"<url><loc>{esc(absolute(site['base_url'], p))}</loc><lastmod>{date.today().isoformat()}</lastmod></url>" for p in sorted(paths))
     write(out / "sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}\n</urlset>\n')
     write(out / "robots.txt", f"User-agent: *\nAllow: /\nSitemap: {site['base_url'].rstrip()}/sitemap.xml\n")
-    print(json.dumps({"status": "ok", "html_pages": len(paths), "tools": len(tools), "guides": len(guides), "target_min_pages": accelerator.get("target_min_pages", 50)}, indent=2))
+    print(json.dumps({"status": "ok", "html_pages": len(paths), "tools": len(tools), "guides": len(guides), "seasonal_pages": len(editorial.get("seasonal_pages", [])), "target_min_pages": accelerator.get("target_min_pages", 50)}, indent=2))
 
 if __name__ == "__main__":
     main()

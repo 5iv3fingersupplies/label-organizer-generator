@@ -1,0 +1,424 @@
+{
+  "strategy_source_summary": "Adapted from supplied affiliate marketing materials: own the site, build topical authority, publish consistently, favor buyer-intent pages, reduce friction, and keep a return channel.",
+  "no_cost_adaptation": "Static seasonal pages, Atom feed, internal links, and deterministic optimization reports replace paid hosting, paid plugins, paid keyword tools, and paid email systems.",
+  "traffic_channels": [
+    {
+      "channel": "Organic search",
+      "implementation": "Seasonal and product-fit pages create clearer long-tail entry points around buyer intent."
+    },
+    {
+      "channel": "Owned return traffic",
+      "implementation": "Atom feed lets visitors follow new pages without accounts, email storage, or a paid newsletter service."
+    },
+    {
+      "channel": "Partner readiness",
+      "implementation": "Publisher standards page explains disclosure, evidence, and no paid placement rules for future direct affiliate approvals."
+    },
+    {
+      "channel": "Manual-free optimization",
+      "implementation": "Scheduled reports score tools, product-fit pages, seasonal pages, and optional private exports without calling paid APIs."
+    }
+  ],
+  "source_action_items": [
+    "Prioritize transactional page formats: tool pages, product-fit pages, comparison-style decision pages, and seasonal checklists.",
+    "Build internal links from supporting pages to the most relevant calculator and product-fit page.",
+    "Use trust cues before monetized links: disclosure, no account, private inputs, and evidence-first limitations.",
+    "Do not add paid email, paid keyword, paid AI, ads, or analytics dependencies."
+  ],
+  "seasonal_pages": [
+    {
+      "slug": "january-reset-pantry-label-maker",
+      "month": "January",
+      "theme": "reset",
+      "title": "January reset: pantry Label Maker",
+      "category": "Labels",
+      "description": "A seasonal decision page for using Pantry Label Maker with Pantry label systems that stay readable before opening product-fit links.",
+      "reason": "Reset the workspace and choose only the supplies the workflow proves you need.",
+      "tool_slugs": [
+        "pantry-label-maker",
+        "qr-inventory-text-builder"
+      ],
+      "guide_slugs": [
+        "pantry-label-systems-that-stay-readable",
+        "emergency-bin-labels-for-fast-checks"
+      ],
+      "recommendation_ids": [
+        "waterproof-label-paper",
+        "clear-pantry-bins",
+        "permanent-markers"
+      ],
+      "decision_prompts": [
+        "What measurement, count, or requirement changed this month?",
+        "Which current item still solves the job without a new purchase?",
+        "Which product category is justified by the calculator result?"
+      ],
+      "avoid_prompts": [
+        "Do not buy a broad bundle when a focused item solves the task.",
+        "Do not rely on live marketplace claims that this static site cannot verify.",
+        "Do not add a new tool until the existing workflow has a clear gap."
+      ]
+    },
+    {
+      "slug": "february-small-space-setup-moving-box-labels",
+      "month": "February",
+      "theme": "small-space setup",
+      "title": "February small-space setup: moving Box Label Generator",
+      "category": "Moving",
+      "description": "A seasonal decision page for using Moving Box Label Generator with QR inventory notes without a subscription before opening product-fit links.",
+      "reason": "Tighten the setup before the season gets busy.",
+      "tool_slugs": [
+        "moving-box-labels",
+        "label-pack-comparison"
+      ],
+      "guide_slugs": [
+        "qr-inventory-notes-without-a-subscription",
+        "kids-room-toy-bin-labels-that-actually-get-used"
+      ],
+      "recommendation_ids": [
+        "moving-labels",
+        "packing-tape",
+        "box-cutter",
+        "clear-pantry-bins"
+      ],
+      "decision_prompts": [
+        "What measurement, count, or requirement changed this month?",
+        "Which current item still solves the job without a new purchase?",
+        "Which product category is justified by the calculator result?"
+      ],
+      "avoid_prompts": [
+        "Do not buy a broad bundle when a focused item solves the task.",
+        "Do not rely on live marketplace claims that this static site cannot verify.",
+        "Do not add a new tool until the existing workflow has a clear gap."
+      ]
+    },
+    {
+      "slug": "march-spring-planning-garage-bin-inventory",
+      "month": "March",
+      "theme": "spring planning",
+      "title": "March spring planning: garage Bin Inventory Planner",
+      "category": "Inventory",
+      "description": "A seasonal decision page for using Garage Bin Inventory Planner with Label maker versus printable labels before opening product-fit links.",
+      "reason": "Measure, sort, and prepare before buying fresh supplies.",
+      "tool_slugs": [
+        "garage-bin-inventory",
+        "pantry-label-maker"
+      ],
+      "guide_slugs": [
+        "label-maker-versus-printable-labels",
+        "laundry-shelf-labels-for-shared-homes"
+      ],
+      "recommendation_ids": [
+        "latching-storage-bins",
+        "waterproof-labels",
+        "shelf-marker-clips",
+        "permanent-markers"
+      ],
+      "decision_prompts": [
+        "What measurement, count, or requirement changed this month?",
+        "Which current item still solves the job without a new purchase?",
+        "Which product category is justified by the calculator result?"
+      ],
+      "avoid_prompts": [
+        "Do not buy a broad bundle when a focused item solves the task.",
+        "Do not rely on live marketplace claims that this static site cannot verify.",
+        "Do not add a new tool until the existing workflow has a clear gap."
+      ]
+    },
+    {
+      "slug": "april-cleanup-pass-qr-inventory-text-builder",
+      "month": "April",
+      "theme": "cleanup pass",
+      "title": "April cleanup pass: qR Inventory Text Builder",
+      "category": "Inventory",
+      "description": "A seasonal decision page for using QR Inventory Text Builder with Inventory notebooks as a low-tech backup before opening product-fit links.",
+      "reason": "Remove friction from the routine before adding more gear.",
+      "tool_slugs": [
+        "qr-inventory-text-builder",
+        "moving-box-labels"
+      ],
+      "guide_slugs": [
+        "inventory-notebooks-as-a-low-tech-backup",
+        "label-maker-versus-printable-labels"
+      ],
+      "recommendation_ids": [
+        "qr-label-sheets",
+        "label-printer",
+        "inventory-notebook",
+        "moving-labels"
+      ],
+      "decision_prompts": [
+        "What measurement, count, or requirement changed this month?",
+        "Which current item still solves the job without a new purchase?",
+        "Which product category is justified by the calculator result?"
+      ],
+      "avoid_prompts": [
+        "Do not buy a broad bundle when a focused item solves the task.",
+        "Do not rely on live marketplace claims that this static site cannot verify.",
+        "Do not add a new tool until the existing workflow has a clear gap."
+      ]
+    },
+    {
+      "slug": "may-busy-week-buffer-label-pack-comparison",
+      "month": "May",
+      "theme": "busy-week buffer",
+      "title": "May busy-week buffer: label Pack Comparison",
+      "category": "Labels",
+      "description": "A seasonal decision page for using Label Pack Comparison with Pantry label systems that stay readable before opening product-fit links.",
+      "reason": "Build a light backup plan for busier weeks.",
+      "tool_slugs": [
+        "label-pack-comparison",
+        "garage-bin-inventory"
+      ],
+      "guide_slugs": [
+        "pantry-label-systems-that-stay-readable",
+        "waterproof-label-use-cases-around-the-house"
+      ],
+      "recommendation_ids": [
+        "waterproof-labels",
+        "removable-labels",
+        "laminating-pouches",
+        "packing-tape"
+      ],
+      "decision_prompts": [
+        "What measurement, count, or requirement changed this month?",
+        "Which current item still solves the job without a new purchase?",
+        "Which product category is justified by the calculator result?"
+      ],
+      "avoid_prompts": [
+        "Do not buy a broad bundle when a focused item solves the task.",
+        "Do not rely on live marketplace claims that this static site cannot verify.",
+        "Do not add a new tool until the existing workflow has a clear gap."
+      ]
+    },
+    {
+      "slug": "june-travel-and-outdoor-check-pantry-label-maker",
+      "month": "June",
+      "theme": "travel and outdoor check",
+      "title": "June travel and outdoor check: pantry Label Maker",
+      "category": "Labels",
+      "description": "A seasonal decision page for using Pantry Label Maker with Label paper choices before buying a pack before opening product-fit links.",
+      "reason": "Check portable, compact, or weather-ready options before browsing.",
+      "tool_slugs": [
+        "pantry-label-maker",
+        "qr-inventory-text-builder"
+      ],
+      "guide_slugs": [
+        "label-paper-choices-before-buying-a-pack",
+        "moving-day-priority-labels"
+      ],
+      "recommendation_ids": [
+        "waterproof-label-paper",
+        "clear-pantry-bins",
+        "permanent-markers",
+        "box-cutter"
+      ],
+      "decision_prompts": [
+        "What measurement, count, or requirement changed this month?",
+        "Which current item still solves the job without a new purchase?",
+        "Which product category is justified by the calculator result?"
+      ],
+      "avoid_prompts": [
+        "Do not buy a broad bundle when a focused item solves the task.",
+        "Do not rely on live marketplace claims that this static site cannot verify.",
+        "Do not add a new tool until the existing workflow has a clear gap."
+      ]
+    },
+    {
+      "slug": "july-midyear-audit-moving-box-labels",
+      "month": "July",
+      "theme": "midyear audit",
+      "title": "July midyear audit: moving Box Label Generator",
+      "category": "Moving",
+      "description": "A seasonal decision page for using Moving Box Label Generator with Laundry shelf labels for shared homes before opening product-fit links.",
+      "reason": "Compare what is actually being used against what is stored.",
+      "tool_slugs": [
+        "moving-box-labels",
+        "label-pack-comparison"
+      ],
+      "guide_slugs": [
+        "laundry-shelf-labels-for-shared-homes",
+        "inventory-notebooks-as-a-low-tech-backup"
+      ],
+      "recommendation_ids": [
+        "moving-labels",
+        "packing-tape",
+        "box-cutter",
+        "latching-storage-bins"
+      ],
+      "decision_prompts": [
+        "What measurement, count, or requirement changed this month?",
+        "Which current item still solves the job without a new purchase?",
+        "Which product category is justified by the calculator result?"
+      ],
+      "avoid_prompts": [
+        "Do not buy a broad bundle when a focused item solves the task.",
+        "Do not rely on live marketplace claims that this static site cannot verify.",
+        "Do not add a new tool until the existing workflow has a clear gap."
+      ]
+    },
+    {
+      "slug": "august-back-to-routine-setup-garage-bin-inventory",
+      "month": "August",
+      "theme": "back-to-routine setup",
+      "title": "August back-to-routine setup: garage Bin Inventory Planner",
+      "category": "Inventory",
+      "description": "A seasonal decision page for using Garage Bin Inventory Planner with Inventory notebooks as a low-tech backup before opening product-fit links.",
+      "reason": "Prepare repeatable routines before the next packed calendar.",
+      "tool_slugs": [
+        "garage-bin-inventory",
+        "pantry-label-maker"
+      ],
+      "guide_slugs": [
+        "inventory-notebooks-as-a-low-tech-backup",
+        "pantry-label-systems-that-stay-readable"
+      ],
+      "recommendation_ids": [
+        "latching-storage-bins",
+        "waterproof-labels",
+        "shelf-marker-clips"
+      ],
+      "decision_prompts": [
+        "What measurement, count, or requirement changed this month?",
+        "Which current item still solves the job without a new purchase?",
+        "Which product category is justified by the calculator result?"
+      ],
+      "avoid_prompts": [
+        "Do not buy a broad bundle when a focused item solves the task.",
+        "Do not rely on live marketplace claims that this static site cannot verify.",
+        "Do not add a new tool until the existing workflow has a clear gap."
+      ]
+    },
+    {
+      "slug": "september-fall-organization-qr-inventory-text-builder",
+      "month": "September",
+      "theme": "fall organization",
+      "title": "September fall organization: qR Inventory Text Builder",
+      "category": "Inventory",
+      "description": "A seasonal decision page for using QR Inventory Text Builder with Garage bin ID systems for seasonal storage before opening product-fit links.",
+      "reason": "Tighten labels, storage, and repeatable planning steps.",
+      "tool_slugs": [
+        "qr-inventory-text-builder",
+        "moving-box-labels"
+      ],
+      "guide_slugs": [
+        "garage-bin-id-systems-for-seasonal-storage",
+        "moving-box-labels-that-reduce-unpacking-chaos"
+      ],
+      "recommendation_ids": [
+        "qr-label-sheets",
+        "label-printer",
+        "inventory-notebook",
+        "shelf-marker-clips"
+      ],
+      "decision_prompts": [
+        "What measurement, count, or requirement changed this month?",
+        "Which current item still solves the job without a new purchase?",
+        "Which product category is justified by the calculator result?"
+      ],
+      "avoid_prompts": [
+        "Do not buy a broad bundle when a focused item solves the task.",
+        "Do not rely on live marketplace claims that this static site cannot verify.",
+        "Do not add a new tool until the existing workflow has a clear gap."
+      ]
+    },
+    {
+      "slug": "october-holiday-prep-label-pack-comparison",
+      "month": "October",
+      "theme": "holiday prep",
+      "title": "October holiday prep: label Pack Comparison",
+      "category": "Labels",
+      "description": "A seasonal decision page for using Label Pack Comparison with Label paper choices before buying a pack before opening product-fit links.",
+      "reason": "Prepare supplies before the year-end rush.",
+      "tool_slugs": [
+        "label-pack-comparison",
+        "garage-bin-inventory"
+      ],
+      "guide_slugs": [
+        "label-paper-choices-before-buying-a-pack",
+        "garage-bin-id-systems-for-seasonal-storage"
+      ],
+      "recommendation_ids": [
+        "waterproof-labels",
+        "removable-labels",
+        "laminating-pouches",
+        "qr-label-sheets"
+      ],
+      "decision_prompts": [
+        "What measurement, count, or requirement changed this month?",
+        "Which current item still solves the job without a new purchase?",
+        "Which product category is justified by the calculator result?"
+      ],
+      "avoid_prompts": [
+        "Do not buy a broad bundle when a focused item solves the task.",
+        "Do not rely on live marketplace claims that this static site cannot verify.",
+        "Do not add a new tool until the existing workflow has a clear gap."
+      ]
+    },
+    {
+      "slug": "november-hosting-and-gifting-check-pantry-label-maker",
+      "month": "November",
+      "theme": "hosting and gifting check",
+      "title": "November hosting and gifting check: pantry Label Maker",
+      "category": "Labels",
+      "description": "A seasonal decision page for using Pantry Label Maker with Kids room toy-bin labels that actually get used before opening product-fit links.",
+      "reason": "Plan quantities and setup needs before last-minute buying.",
+      "tool_slugs": [
+        "pantry-label-maker",
+        "qr-inventory-text-builder"
+      ],
+      "guide_slugs": [
+        "kids-room-toy-bin-labels-that-actually-get-used",
+        "label-paper-choices-before-buying-a-pack"
+      ],
+      "recommendation_ids": [
+        "waterproof-label-paper",
+        "clear-pantry-bins",
+        "permanent-markers",
+        "label-printer"
+      ],
+      "decision_prompts": [
+        "What measurement, count, or requirement changed this month?",
+        "Which current item still solves the job without a new purchase?",
+        "Which product category is justified by the calculator result?"
+      ],
+      "avoid_prompts": [
+        "Do not buy a broad bundle when a focused item solves the task.",
+        "Do not rely on live marketplace claims that this static site cannot verify.",
+        "Do not add a new tool until the existing workflow has a clear gap."
+      ]
+    },
+    {
+      "slug": "december-year-end-simplify-moving-box-labels",
+      "month": "December",
+      "theme": "year-end simplify",
+      "title": "December year-end simplify: moving Box Label Generator",
+      "category": "Moving",
+      "description": "A seasonal decision page for using Moving Box Label Generator with Moving-day priority labels before opening product-fit links.",
+      "reason": "Document what worked and simplify the next cycle.",
+      "tool_slugs": [
+        "moving-box-labels",
+        "label-pack-comparison"
+      ],
+      "guide_slugs": [
+        "moving-day-priority-labels",
+        "qr-inventory-notes-without-a-subscription"
+      ],
+      "recommendation_ids": [
+        "moving-labels",
+        "packing-tape",
+        "box-cutter",
+        "inventory-notebook"
+      ],
+      "decision_prompts": [
+        "What measurement, count, or requirement changed this month?",
+        "Which current item still solves the job without a new purchase?",
+        "Which product category is justified by the calculator result?"
+      ],
+      "avoid_prompts": [
+        "Do not buy a broad bundle when a focused item solves the task.",
+        "Do not rely on live marketplace claims that this static site cannot verify.",
+        "Do not add a new tool until the existing workflow has a clear gap."
+      ]
+    }
+  ]
+}

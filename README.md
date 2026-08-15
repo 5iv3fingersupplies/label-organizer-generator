@@ -37,3 +37,10 @@ python -m unittest discover -s tests
 - Upgraded the portfolio UI with stronger visual hierarchy, contrast, decision cues, and clearer calls to action.
 - Added site-specific hero art and metadata for richer sharing previews.
 - Uses truthful advertising psychology: clarity, friction reduction, loss-aversion checklists, and calculator-first confidence cues.
+
+## Affiliate source upgrade
+
+- Added a static Atom feed as a free owned return channel.
+- Added 12 seasonal buyer-intent pages generated from structured data.
+- Added a start-here routing page and publisher-standards page to improve trust and partner readiness.
+- Extended deterministic optimization reports to score seasonal and traffic-channel opportunities without paid APIs.
