@@ -18,14 +18,21 @@ class Parser(HTMLParser):
         if "href" in data: self.hrefs.append(data["href"])
         if tag=="script" and "src" in data: self.scripts.append(data["src"])
 
-def load(name): return json.loads((DATA/name).read_text(encoding="utf-8"))
+def load(name, default=None):
+    path = DATA / name
+    if not path.exists():
+        return default
+    return json.loads(path.read_text(encoding="utf-8"))
+
 def fail(errors, message): errors.append(message)
+
 def scan(errors, label, text):
     lower=text.lower()
     lower=lower.replace("does not display amazon reviews, ratings, prices, availability, or images.", "")
     for pat in FORBIDDEN:
         if re.search(pat, lower): fail(errors, f"forbidden volatile claim in {label}: {pat}")
     if "m.media-amazon.com" in lower or "images-na.ssl-images-amazon.com" in lower: fail(errors, f"amazon image reference in {label}")
+
 def target_exists(dist, current, href):
     if href.startswith("#") or href.startswith("mailto:"): return True
     parsed=urlparse(href)
@@ -36,9 +43,11 @@ def target_exists(dist, current, href):
     try: target.relative_to(dist.resolve())
     except ValueError: return False
     return target.exists()
+
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument("--dist", default="site"); args=ap.parse_args()
-    errors=[]; tools=load("tools.json"); guides=load("guides.json"); monetization=load("monetization.json"); operations=load("operations.json"); recs={r["id"] for r in load("recommendations.json")}
+    errors=[]; tools=load("tools.json"); guides=load("guides.json"); monetization=load("monetization.json"); operations=load("operations.json"); accelerator=load("accelerator.json", {"target_min_pages": 50}); recommendations=load("recommendations.json")
+    recs={r["id"] for r in recommendations}
     if monetization.get("cost_cap_usd") != 0: fail(errors, "cost cap is not 0")
     if operations.get("max_incremental_cost_usd") != 0: fail(errors, "operations cost cap is not 0")
     if operations.get("routine_human_approval_required"): fail(errors, "routine human approval is enabled")
@@ -51,23 +60,32 @@ def main():
             slugs.add(item["slug"]); scan(errors, f"{name}:{item['slug']}", json.dumps(item))
             for rec in item.get("recommendation_ids", []):
                 if rec not in recs: fail(errors, f"unknown recommendation {rec}")
+    rec_ids=set()
+    for rec in recommendations:
+        if rec["id"] in rec_ids: fail(errors, f"duplicate recommendation {rec['id']}")
+        rec_ids.add(rec["id"]); scan(errors, f"recommendation:{rec['id']}", json.dumps(rec))
     if len(tools) < 5: fail(errors, "fewer than 5 tools")
     if len(guides) < 10: fail(errors, "fewer than 10 guides")
     dist=(ROOT/args.dist).resolve()
     html=list(dist.rglob("*.html"))
-    if len(html) < 20: fail(errors, "fewer than 20 html pages")
+    target_min=int(accelerator.get("target_min_pages", 50))
+    if len(html) < target_min: fail(errors, f"fewer than target minimum html pages: {len(html)} < {target_min}")
+    required=["sitemap.xml","robots.txt","assets/css/site.css","assets/js/tools.js","assets/img/social-card.svg","recommendations/index.html","tool-plans/index.html","checklists/index.html","categories/index.html"]
+    for req in required:
+        if not (dist/req).exists(): fail(errors, f"missing {req}")
+    for rec in recommendations:
+        if not (dist/"recommendations"/rec["id"]/"index.html").exists(): fail(errors, f"missing product-fit page {rec['id']}")
     for file in html:
         text=file.read_text(encoding="utf-8")
         if DISCLOSURE not in text: fail(errors, f"missing affiliate disclosure in {file.relative_to(dist)}")
         if '<link rel="canonical"' not in text: fail(errors, f"missing canonical in {file.relative_to(dist)}")
         if 'application/ld+json' not in text: fail(errors, f"missing structured data in {file.relative_to(dist)}")
-        if "click" not in text and "assets/js/tools.js" not in text: pass
         scan(errors, str(file.relative_to(dist)), text)
         parser=Parser(); parser.feed(text)
         for href in parser.hrefs:
             if not target_exists(dist, file, href): fail(errors, f"broken internal link from {file.relative_to(dist)} to {href}")
-    for req in ["sitemap.xml","robots.txt","assets/css/site.css","assets/js/tools.js"]:
-        if not (dist/req).exists(): fail(errors, f"missing {req}")
+    js=(dist/"assets/js/tools.js").read_text(encoding="utf-8")
+    if "fff_affiliate_click_counts" not in js: fail(errors, "missing browser-local affiliate click counter")
     workflow_text="\n".join(p.read_text(encoding="utf-8") for p in (ROOT/".github/workflows").glob("*.yml"))
     for needle in ["cron:", "deploy-pages", "scripts/preflight.py", "scripts/optimize.py", "scripts/validate.py"]:
         if needle not in workflow_text: fail(errors, f"workflow missing {needle}")
@@ -83,5 +101,6 @@ def main():
     if errors:
         for e in errors: print("ERROR:", e, file=sys.stderr)
         return 1
-    print(json.dumps({"status":"ok","checks":["data","dist","workflows","public-safety"]}, indent=2)); return 0
+    print(json.dumps({"status":"ok","checks":["data","dist","workflows","public-safety","accelerator"],"html_pages":len(html)}, indent=2)); return 0
+
 if __name__ == "__main__": raise SystemExit(main())

@@ -1,0 +1,61 @@
+{
+  "target_min_pages": 50,
+  "page_types": [
+    "product-fit",
+    "tool-buying-plan",
+    "printable-checklist",
+    "topic-hub"
+  ],
+  "intent": "accelerate qualified long-tail discovery without paid traffic or thin pages",
+  "category_hubs": [
+    {
+      "slug": "inventory",
+      "title": "Inventory"
+    },
+    {
+      "slug": "labels",
+      "title": "Labels"
+    },
+    {
+      "slug": "moving",
+      "title": "Moving"
+    }
+  ],
+  "product_fit_pages": [
+    "waterproof-label-paper",
+    "clear-pantry-bins",
+    "permanent-markers",
+    "moving-labels",
+    "packing-tape",
+    "box-cutter",
+    "latching-storage-bins",
+    "waterproof-labels",
+    "shelf-marker-clips",
+    "qr-label-sheets",
+    "label-printer",
+    "inventory-notebook",
+    "removable-labels",
+    "laminating-pouches"
+  ],
+  "tool_plan_pages": [
+    "pantry-label-maker",
+    "moving-box-labels",
+    "garage-bin-inventory",
+    "qr-inventory-text-builder",
+    "label-pack-comparison"
+  ],
+  "checklist_pages": [
+    "pantry-label-systems-that-stay-readable",
+    "moving-box-labels-that-reduce-unpacking-chaos",
+    "garage-bin-id-systems-for-seasonal-storage",
+    "label-paper-choices-before-buying-a-pack",
+    "qr-inventory-notes-without-a-subscription",
+    "emergency-bin-labels-for-fast-checks",
+    "kids-room-toy-bin-labels-that-actually-get-used",
+    "laundry-shelf-labels-for-shared-homes",
+    "label-maker-versus-printable-labels",
+    "waterproof-label-use-cases-around-the-house",
+    "moving-day-priority-labels",
+    "inventory-notebooks-as-a-low-tech-backup"
+  ]
+}

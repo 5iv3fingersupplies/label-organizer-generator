@@ -23,3 +23,11 @@ python scripts/optimize.py --out reports
 python -m unittest discover -s tests
 ```
 
+## Accelerator pass
+
+- Expanded to at least 50 indexed HTML pages.
+- Added product-fit pages for every monetized recommendation.
+- Added calculator-to-buying-plan pages for every interactive tool.
+- Added printable checklist pages for guide-based workflows.
+- Added topic hubs, social preview asset, local-only affiliate click counter, and stricter validation.
+- Live URL: https://5iv3fingersupplies.github.io/label-organizer-generator/

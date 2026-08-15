@@ -9,9 +9,13 @@ class SiteTest(unittest.TestCase):
     def test_validation(self):
         subprocess.run([sys.executable,"scripts/validate.py","--dist","site"],cwd=ROOT,check=True)
     def test_counts(self):
-        self.assertGreaterEqual(len(json.loads((ROOT/"data/tools.json").read_text())),5)
-        self.assertGreaterEqual(len(json.loads((ROOT/"data/guides.json").read_text())),10)
-        self.assertGreaterEqual(len(list((ROOT/"site").rglob("*.html"))),20)
+        accelerator=json.loads((ROOT/"data/accelerator.json").read_text(encoding="utf-8"))
+        self.assertGreaterEqual(len(json.loads((ROOT/"data/tools.json").read_text(encoding="utf-8"))),5)
+        self.assertGreaterEqual(len(json.loads((ROOT/"data/guides.json").read_text(encoding="utf-8"))),10)
+        self.assertGreaterEqual(len(list((ROOT/"site").rglob("*.html"))),accelerator["target_min_pages"])
+    def test_accelerator_pages(self):
+        for path in ["recommendations/index.html","tool-plans/index.html","checklists/index.html","categories/index.html","assets/img/social-card.svg"]:
+            self.assertTrue((ROOT/"site"/path).exists(), path)
     def test_monetized_links(self):
         html="\n".join(p.read_text(encoding="utf-8") for p in (ROOT/"site").rglob("*.html"))
         self.assertIn("tag=fivefingersup-20", html)
@@ -33,4 +37,5 @@ class SiteTest(unittest.TestCase):
         self.assertEqual(report["status"],"ok")
         self.assertEqual(report["cost"]["incremental_usd"],0)
         self.assertFalse(report["cost"]["paid_apis_used"])
+        self.assertIn("accelerator_page_types", report["site"])
 if __name__=="__main__": unittest.main()
